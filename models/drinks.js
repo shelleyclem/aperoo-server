@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db');
 
-const Drinks = db.define('drink', {
+const Drink = db.define('drink', {
     drinkName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -45,4 +45,4 @@ const Drinks = db.define('drink', {
     }
 });
 
-module.exports = Drinks;
+module.exports = Drink;
