@@ -1,7 +1,9 @@
-const UserModel = require ('./user');
-const DrinkModel = require('./drink');
+const UserModel = require ('./users');
+const DrinkModel = require('./drinks');
+const BarReviewModel = require('./bar-reviews');
 
 module.exports = {
     UserModel,
-    DrinkModel
+    DrinkModel,
+    BarReviewModel
 };
