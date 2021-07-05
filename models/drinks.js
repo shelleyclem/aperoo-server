@@ -16,7 +16,7 @@ const Drink = db.define('drink', {
         allowNull: true
     },
     ingredients: {
-        type: DataTypes.ARRAY,
+        type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: false
     },
     servingGlassType: {
@@ -36,7 +36,7 @@ const Drink = db.define('drink', {
         allowNull: false
     },
     date: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false
     },
     owner: {

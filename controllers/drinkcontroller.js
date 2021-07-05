@@ -2,6 +2,8 @@ const Express = require('express');
 const router = Express.Router();
 const { UniqueConstraintError } = require('sequelize/lib/errors');
 const { DrinkModel } = require('../models');
+const validateSession  = require ('../middleware/validate-session');
+const validateRole = require('../middleware/validate-role');
 
 //practice route
 router.get('/practice', (req, res) => {
@@ -18,8 +20,8 @@ router.get('/practice', (req, res) => {
 - Requires login
 */
 
-router.post('/mixNewDrink', validateSession, async (req, res) => {
-    const { drinkName, containsAlcohol, mainSpirit, ingredients, servingGlassType, garnish, notes, username, date} = req.body;
+router.post('/mixNewDrink', async function (req, res) {
+    const { drinkName, containsAlcohol, mainSpirit, ingredients, servingGlassType, garnish, notes, username, date } = req.body;
     const { id } = req.user;
     const drinkEntry = {
         drinkName,
@@ -78,7 +80,7 @@ router.get('/all', async (req, res) => {
 - Read
 */
 
-router.get('/:drinkName', async (req, res) => {
+router.get('/:drinkName', validateSession, async (req, res) => {
     const { drinkName } = req.params;
     try {
         let thisDrink = await DrinkModel.findOne({
@@ -130,7 +132,7 @@ router.put('/:id', validateSession, async (req, res) => {
     try {
         const modifyDrink = await DrinkModel.update (
             { drinkName, containsAlcohol, mainSpirit, ingredients, servingGlassType, garnish, notes, username, date }, 
-            where: {id: req.params.id} 
+            { where: {id: req.params.id} }
         )
         res.status(200).json({
             msg: 'Drink successfully updated.'
@@ -152,7 +154,7 @@ router.put('/:id', validateSession, async (req, res) => {
 - Requires Login
 */
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validateRole, async (req, res) => {
     try {
         const locatedDrink = await DrinkModel.destroy({
             where: {id: req.params.id}

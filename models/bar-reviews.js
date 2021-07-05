@@ -39,7 +39,7 @@ const  BarReview = db.define('barReview', {
         allowNull: false,
     },
     date: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
     },
     owner: {

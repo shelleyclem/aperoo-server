@@ -1,18 +1,20 @@
+//  Imports & Middleware
 require('dotenv').config();
 const Express = require('express');
 const app = Express();
 app.use(Express.json());
 const dbConnection = require('./db');
-
 const middleware = require('./middleware');
 const controllers = require('./controllers');
 
+//  Endpoints
 app.use(middleware.headers);
 app.use('/user', controllers.userController);
 app.use('/drink', controllers.drinkController);
 app.use('/barReview', controllers.barReviewController);
 
 
+//  DB Auth & Sync
 dbConnection.authenticate()
     .then(() => dbConnection.sync())
     .then(() => {
@@ -23,3 +25,4 @@ dbConnection.authenticate()
     .catch((err) => {
         console.log(`[Server]: Server crashed. Error: ${err}`);
     })
+

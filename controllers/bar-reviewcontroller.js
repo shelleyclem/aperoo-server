@@ -1,6 +1,8 @@
 const Express = require('express');
 const sequelize = require('../db');
 const router = Express.Router();
+const validateSession = require('../middleware/validate-session');
+const validateRole = require('../middleware/validate-role');
 
 const { BarReviewModel, DrinkModel } = require('../models');
 
@@ -12,7 +14,7 @@ const { BarReviewModel, DrinkModel } = require('../models');
 - Requires Login
 */
 
-router.post('/addBar', vaidateSession, async (req, res) => {
+router.post('/addBar', validateSession, async (req, res) => {
     const { barName, wineListRating, cocktailRating, foodRating, atmostphereRating, outdoorSeating, zipcode, notes, username, date } = req.body;
     const { id } = req.user;
     const barEntry = {
@@ -60,7 +62,7 @@ router.get('/all', async (req, res) => {
 
 /*
 =================================
-    Get Bar Review by Name
+    Get Bar Reviews by Name
 =================================
 - Read
 */
@@ -116,7 +118,7 @@ router.put('/:id', validateSession, async (req, res) => {
     try {
         const modifyBarReview = await BarReviewModel.update (
             { barName, wineListRating, cocktailRating, foodRating, atmostphereRating, outdoorSeating, zipcode, notes, username, date },
-            where: {id: req.params.id} 
+            { where: {id: req.params.id} }
         )
         res.status(200).json({
             msg: 'Review successfully updated.'
@@ -138,7 +140,7 @@ router.put('/:id', validateSession, async (req, res) => {
 - Requires Login
 */
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validateRole, async (req, res) => {
     try {
         const locatedBarReview = await BarReviewModel.destroy({
             where: {id: req.params.id}
@@ -147,8 +149,11 @@ router.delete('/:id', async (req, res) => {
             msg: 'Review successfully deleted',
         })
     } catch (err) {
+        
         res.status(500).json({
             msg: `Failed to delete review: ${err}`
         })
     }
 });
+
+module.exports = router;
