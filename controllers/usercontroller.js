@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
             })
         } else {
             res.status(500).json({
-                msg: 'Registration failed :( '
+                msg:  `Registration failed :(  ${err}`
             });
         }
     }
@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
 ============================
 */
 
-router.post('./login', async (req, res) => {
+router.post('/login', async (req, res) => {
     let {username, password} = req.body.user;
 
     try {
@@ -67,17 +67,17 @@ router.post('./login', async (req, res) => {
                 });
             } else {
                 res.status(401).json({
-                    message: 'Incorrect username or password.'
+                    message: `Incorrect username or password. ${err}` 
                 });
             }
         } else {
             res.status(401).json({
-                msg: 'Incorrect username or password.'
+                msg: `Incorrect username or password. ${err}`
             });
         }
     } catch (err) {
         res.status(500).json({
-            msg: 'User login failed.'
+            msg: `User login failed. ${err}`
         });
     }
 });

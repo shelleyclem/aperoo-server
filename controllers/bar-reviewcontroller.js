@@ -15,14 +15,14 @@ const { BarReviewModel, DrinkModel } = require('../models');
 */
 
 router.post('/addBar', validateSession, async (req, res) => {
-    const { barName, wineListRating, cocktailRating, foodRating, atmostphereRating, outdoorSeating, zipcode, notes, username, date } = req.body;
+    const { barName, wineListRating, cocktailRating, foodRating, atmosphereRating, outdoorSeating, zipcode, notes, username, date } = req.body;
     const { id } = req.user;
     const barEntry = {
         barName,
         wineListRating,
         cocktailRating,
         foodRating,
-        atmostphereRating,
+        atmosphereRating,
         outdoorSeating,
         zipcode,
         notes,
@@ -71,7 +71,7 @@ router.get('/:barName', async (req, res) => {
     const { barName } = req.params;
     try {
         let thisBar = await BarReviewModel.findOne({
-            where: { drinkName: drinkName }
+            where: { barName: barName }
         })
         res.status(200).json(thisBar)
     } catch (err) {

@@ -20,7 +20,7 @@ router.get('/practice', (req, res) => {
 - Requires login
 */
 
-router.post('/mixNewDrink', async function (req, res) {
+router.post('/mixNewDrink', validateSession, async function (req, res) {
     const { drinkName, containsAlcohol, mainSpirit, ingredients, servingGlassType, garnish, notes, username, date } = req.body;
     const { id } = req.user;
     const drinkEntry = {

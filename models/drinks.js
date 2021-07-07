@@ -28,7 +28,7 @@ const Drink = db.define('drink', {
         allowNull: true
     },
     notes: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     username: {

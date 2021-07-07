@@ -31,7 +31,7 @@ const  BarReview = db.define('barReview', {
         allowNull: false
     },
     notes: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     username: {
