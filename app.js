@@ -18,7 +18,7 @@ app.use('/barReview', controllers.barReviewController);
 dbConnection.authenticate()
     .then(() => dbConnection.sync())
     .then(() => {
-        app.listen(process.env.PORT, () =>{
+        app.listen(process.env.PORT, () => {
             console.log(`Server is listening on port ${process.env.PORT}`);
         });
     })
